@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_api_cycle_8/features/auth/register/presentation/controller/register_cubit.dart';
+import 'package:news_api_cycle_8/features/auth/register/presentation/controller/register_states.dart';
 
 import '../../../../../../core/app_images.dart';
 import '../../../../../../core/widgets/custom_button.dart';
@@ -48,28 +51,23 @@ class _RegisterFormState extends State<RegisterForm> {
           textAlign: TextAlign.right,
         ),
         const SizedBox(height: 33),
-        CustomButton(
-          title: "Sign Up",
-          onPressed: () async {
-            try {
-              final credential =
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              );
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'weak-password') {
-                // print('The password provided is too weak.');
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("The password provided is too weak.")));
-              } else if (e.code == 'email-already-in-use') {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("The account already exists for that email.")));
-                print('The account already exists for that email.');
-              }
-            } catch (e) {
-              print(e.toString());
+        BlocConsumer<RegisterCubit, RegisterStates>(
+          
+          listener: (context,state){
+            if(state is RegisterFailureState){
+              ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(state.errorMessage)));
             }
+          },
+          builder: (context, state) {
+            return      state is  RegisterLoadingState?  const Center(child: CircularProgressIndicator()): CustomButton(
+              title: "Sign Up",
+              onPressed: () {
+                BlocProvider.of<RegisterCubit>(context).signUpWithFirebase(
+                    email: emailController.text.trim(),
+                    pas: passwordController.text.trim(),
+                    context: context);
+              },
+            );
           },
         )
       ],
