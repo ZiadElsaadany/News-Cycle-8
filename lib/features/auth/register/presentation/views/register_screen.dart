@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_api_cycle_8/features/auth/register/data/repos/register_repo_implementation.dart';
 import 'package:news_api_cycle_8/features/auth/register/presentation/controller/register_cubit.dart';
 import 'package:news_api_cycle_8/features/auth/register/presentation/views/widgets/register_FORM.dart';
 
@@ -12,7 +13,9 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-  create: (context) => RegisterCubit(),
+  create: (context) => RegisterCubit(
+    registerRepo: RegisterFirebaseImplementation()
+  ),
   child: Scaffold(
       appBar: AppBar(),
       backgroundColor: AppColors.primaryColor,
