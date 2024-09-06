@@ -29,7 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
       children: [
         CustomField(
           controller: emailController,
@@ -60,12 +60,12 @@ class _RegisterFormState extends State<RegisterForm> {
           },
           builder: (context, state) {
             return      state is  RegisterLoadingState?  const Center(child: CircularProgressIndicator()): CustomButton(
-              title: "Sign Up",
-              onPressed: () {
-                BlocProvider.of<RegisterCubit>(context).signUpWithFirebase(
-                    email: emailController.text.trim(),
-                    pas: passwordController.text.trim(),
-                    context: context);
+    title: "Sign Up",
+    onPressed: () {
+    BlocProvider.of<RegisterCubit>(context).signUpWithFirebase(
+    email: emailController.text.trim(),
+    pas: passwordController.text.trim(),
+    context: context);
               },
             );
           },
