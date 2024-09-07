@@ -62,7 +62,7 @@ class _RegisterFormState extends State<RegisterForm> {
             return      state is  RegisterLoadingState?  const Center(child: CircularProgressIndicator()): CustomButton(
     title: "Sign Up",
     onPressed: () {
-    BlocProvider.of<RegisterCubit>(context).signUpWithFirebase(
+    BlocProvider.of<RegisterCubit>(context).register(
     email: emailController.text.trim(),
     pas: passwordController.text.trim(),
     context: context);

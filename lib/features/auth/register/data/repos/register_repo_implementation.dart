@@ -43,3 +43,11 @@ class RegisterFirebaseImplementation implements RegisterRepo {
     }
   }
 }
+// class RegisterApiImople extends RegisterRepo{
+//   @override
+//   Future<Either<Failure, void>> register({required String email, required String pas, required BuildContext context}) {
+//     // TODO: implement register
+//     throw UnimplementedError();
+//   }
+//
+// }

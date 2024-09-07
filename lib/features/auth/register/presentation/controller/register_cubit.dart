@@ -11,7 +11,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
   final RegisterRepo registerRepo;
 
-  Future<void> signUpWithFirebase(
+  Future<void> register(
       {required String email,
       required String pas,
       required BuildContext context}) async {
