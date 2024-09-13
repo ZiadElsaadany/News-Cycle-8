@@ -6,4 +6,6 @@ abstract class AppImages {
   static const String facebookLogo  = "assets/images/facebook.png";
   static const String openEye  = "assets/images/fluent_eye-28-filled.png";
   static const String closeEye  = "assets/images/fluent_eye-off-16-filled.png";
+  static const String newsLogo  = "assets/images/news_logo.png";
+  static const String homeActiveIcon  = "assets/svgs/home.svg";
 }

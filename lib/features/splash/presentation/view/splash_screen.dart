@@ -3,6 +3,7 @@ import 'package:news_api_cycle_8/features/splash/presentation/view/widgets/splas
 
 import '../../../../core/app_colors.dart';
 import '../../../auth/login/presentstion/view/login_Screen.dart';
+import '../../../home/presentation/view/home_bottom.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigateToLogin( ) {
     Navigator.push(context, MaterialPageRoute(builder: (c) {
-      return  const LoginScreen();
+      return   HomeBottom();
     } )) ;
   }
 

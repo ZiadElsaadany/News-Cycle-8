@@ -40,6 +40,9 @@ dependencies:
   flutter_bloc: ^8.1.6
   dartz: ^0.10.1
   http: ^1.2.2
+  flutter_svg: ^2.0.10+1
+  intl: ^0.19.0
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/svgs/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

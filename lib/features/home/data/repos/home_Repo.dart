@@ -6,7 +6,16 @@ import '../models/new_model.dart';
 abstract class HomeRepo {
 
 
- Future<Either<Failure,List<NewModel>>> getTopHeadline();
+ Future<Either<Failure,List<NewModel>>> getTopHeadline(
+ {
+  required String category
+}
+     );
+ Future<Either<Failure,List<NewModel>>> searchForNews(
+ {
+  required String q
+}
+     );
 
 
 }
