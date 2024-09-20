@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:news_api_cycle_8/core/app_colors.dart';
 import 'package:news_api_cycle_8/core/app_images.dart';
 import 'package:news_api_cycle_8/features/home/presentation/view/widgets/home/home_screen.dart';
 
-class HomeBottom extends StatelessWidget {
+import 'book_marks_screen.dart';
+
+
+class HomeBottom extends StatefulWidget {
    HomeBottom({super.key});
 
+  @override
+  State<HomeBottom> createState() => _HomeBottomState();
+}
+
+class _HomeBottomState extends State<HomeBottom> {
   final List<Widget> lst = [
     const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+  BookMarksScreen()
   ] ;
+
+  int currentIndex= 0 ;
+
    @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,21 +33,25 @@ class HomeBottom extends StatelessWidget {
         height: 63,
         ),
         toolbarHeight: 120,
-        
-      ),
-      body: lst[0],
-      bottomNavigationBar: BottomNavigationBar(items: [ 
-        BottomNavigationBarItem(icon: SvgPicture.asset(
-          AppImages.homeActiveIcon
-        ),label: "Home"),
-        BottomNavigationBarItem(icon: SvgPicture.asset(
 
-            AppImages.homeActiveIcon
-        ),label: "Home"),
-        BottomNavigationBarItem(icon: SvgPicture.asset(
-            AppImages.homeActiveIcon
-        ),label: "Home"),
-        
+      ),
+      body: lst[currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+onTap: (index) {
+  currentIndex=index;
+  setState(() {});
+},
+          currentIndex: currentIndex,
+          selectedItemColor: AppColors.primaryColor,
+          unselectedItemColor: Colors.grey,
+          items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),
+
+        BottomNavigationBarItem(icon: Icon(Icons.bookmark,
+
+        ),label: "BookMarks"),
+
+
       ] ),
 
     );

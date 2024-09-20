@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_api_cycle_8/features/home/presentation/controller/categories/categories_cubit.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/get_top_headline/get_top_headline_cubit.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/get_top_headline/get_top_headline_states.dart';
 import 'package:news_api_cycle_8/features/home/presentation/view/widgets/home/search_widget.dart';
 
+import '../list_view_for_categories.dart';
 import 'list_view_for_news.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,59 +21,65 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
-      category: "technology"
+      category: "sports"
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(  create: (c)=>CategoriesCubit(),),
+      ],
+      child: RefreshIndicator(
 
-       onRefresh: ()async{
-         BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
-             category: "technology"
+         onRefresh: ()async{
+           BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
+               category: "sports"
 
-         );
-       },
+           );
+         },
 
-        child: Column(
-        children: [
-          SearchWidget(),
-          BlocConsumer<TopHeadlineCubit, TopHeadlineStates>(
-            listener: (context, state) {
+          child: Column(
+          children: [
+            SearchWidget(),
+            ListViewForCategories(),
+            BlocConsumer<TopHeadlineCubit, TopHeadlineStates>(
+              listener: (context, state) {
 
-              if(state is GetTopHeadlineFailureState ) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage)));
-              }
+                if(state is GetTopHeadlineFailureState ) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                }
 
-            },
-            builder: (context, state) {
-              return Expanded(child: state is GetTopHeadlineLoadingState?
+              },
+              builder: (context, state) {
+                return Expanded(child: state is GetTopHeadlineLoadingState?
 
-                      const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                      : state is GetTopHeadlineFailureState ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.error),
-                    Text(state.errorMessage),
-                    TextButton(onPressed: ( ){
-                      BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
-                          category: "technology"
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                        : state is GetTopHeadlineFailureState ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error),
+                      Text(state.errorMessage),
+                      TextButton(onPressed: ( ){
+                        BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
+                            category: "technology"
 
-                      );
+                        );
 
-                    } , child: Text("Try Again"))
-                  ],
-                ),
-              ): ListViewForNews(news: BlocProvider
-                  .of<TopHeadlineCubit>(context)
-                  .topHeadlines,));
-            },
-          )
-        ],
+                      } , child: Text("Try Again"))
+                    ],
+                  ),
+                ): ListViewForNews(news: BlocProvider
+                    .of<TopHeadlineCubit>(context)
+                    .topHeadlines,));
+              },
+            )
+          ],
+        ),
       ),
     );
   }

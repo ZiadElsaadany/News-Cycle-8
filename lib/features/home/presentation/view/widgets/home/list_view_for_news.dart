@@ -12,6 +12,8 @@ final List<NewModel> news;
     return ListView.builder(itemBuilder: (context,index) {
 
       return  NewWidget(newModel: news[index]);
+      // news[0]
+      // news[1]
     } ,
     itemCount: news.length,
     );

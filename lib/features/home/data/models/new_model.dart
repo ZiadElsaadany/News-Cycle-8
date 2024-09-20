@@ -6,8 +6,12 @@ class NewModel {
   final String ?url;
   final String ?publishedAt;
   final SourceModel sourceModel;
+  bool bookMark ;
 
-  NewModel({required this.title, required this.desc, required this.content, required this.urlToImage, required this.url, required this.publishedAt, required this.sourceModel});
+  NewModel({required this.title, required this.desc, required this.content, required this.urlToImage, required this.url, required this.publishedAt, required this.sourceModel,
+
+  this.bookMark= false
+  });
 
 
 }
