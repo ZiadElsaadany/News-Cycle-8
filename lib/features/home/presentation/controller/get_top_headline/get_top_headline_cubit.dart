@@ -18,10 +18,16 @@ class TopHeadlineCubit extends Cubit<TopHeadlineStates> {
 
 
   List<NewModel> topHeadlines = [] ;
+  ///  sports   technology
+
+  Map<int , List<NewModel>>   mapForNews =  {} ;
+  //   0     []
 
   Future<void>     getTopHeadline(
   {
-     String category = "technology"
+     String category = "technology",
+    int index = 0,
+    required List<NewModel> bookmarksList
 }
       )  async{
     print("start get top headline");
@@ -38,6 +44,30 @@ class TopHeadlineCubit extends Cubit<TopHeadlineStates> {
 
     },(right) {
       topHeadlines = right;
+
+
+/**
+ *
+ *  {
+ *    0: [NewModel( ) ] ,
+ *    1: [NewsMode( ) ],
+ *
+ *    }
+ *
+ * **/
+
+      topHeadlines = topHeadlines.map((newsItem) {
+        // first new   --> newsItem
+        if (bookmarksList.any((bookmark) => bookmark == newsItem)) {
+          newsItem.bookMark = true; // Assuming you have a `isBookmarked` field
+        }
+        return newsItem;
+      }).toList();
+      mapForNews.addAll({
+        index:topHeadlines
+      });
+
+
 
       print("result is: $topHeadlines   ");
       emit(GetTopHeadlineSuccessState());

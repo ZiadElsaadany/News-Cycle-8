@@ -5,11 +5,12 @@ import 'package:news_api_cycle_8/features/home/presentation/controller/categorie
 import 'package:news_api_cycle_8/features/home/presentation/controller/categories/categories_states.dart';
 
 import '../../../../../core/app_colors.dart';
+import '../../controller/book_mark_cubit/book_mark_cubit.dart';
 import '../../controller/get_top_headline/get_top_headline_cubit.dart';
 
 class ListViewForCategories extends StatelessWidget {
    ListViewForCategories({super.key});
-   // businessentertainmentgeneralhealthsciencesportstechnology
+   // business entertainment general health science sports technology
   final List<CategoryModel> categories = [
     CategoryModel(name: "sports"),
     CategoryModel(name: "technology"),
@@ -48,7 +49,11 @@ class CategoryWidget extends StatelessWidget {
       onTap: ( ) {
         BlocProvider.of<CategoriesCubit>(context).changeIndex(index);
         BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
-          category: categoryModel.name
+            bookmarksList: BlocProvider.of<BookMarkCubit>(context).bookMarks,
+
+
+          category: categoryModel.name,
+          index: index
         );
 
       } ,

@@ -13,9 +13,20 @@ class BookMarksScreen extends StatelessWidget {
     return BlocBuilder<BookMarkCubit, BookMarkStates>(
       builder: (context, state) {
         return ListViewForNews(
-          news: bookMarkCubit.bookMarks,
+          news: bookMarkCubit.bookMarks.toSet().toList(),
         );
       },
     );
   }
+
 }
+
+
+// {
+//   "title" :"ziad" ,
+// "name": "ziad",
+// }
+// {
+// "title" :"ziad" ,
+// "name": "ziad",
+// }

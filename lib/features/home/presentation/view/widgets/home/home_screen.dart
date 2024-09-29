@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_api_cycle_8/features/home/presentation/controller/book_mark_cubit/book_mark_cubit.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/categories/categories_cubit.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/get_top_headline/get_top_headline_cubit.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/get_top_headline/get_top_headline_states.dart';
 import 'package:news_api_cycle_8/features/home/presentation/view/widgets/home/search_widget.dart';
 
+import '../../../../data/models/new_model.dart';
 import '../list_view_for_categories.dart';
 import 'list_view_for_news.dart';
 
@@ -21,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
+      bookmarksList: BlocProvider.of<BookMarkCubit>(context).bookMarks,
+       index:0 ,
       category: "sports"
     );
   }
@@ -35,7 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
          onRefresh: ()async{
            BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
-               category: "sports"
+               bookmarksList: BlocProvider.of<BookMarkCubit>(context).bookMarks,
+
+               category: "sports",
+             index: 0
 
            );
          },
@@ -53,7 +60,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
               },
               builder: (context, state) {
-                return Expanded(child: state is GetTopHeadlineLoadingState?
+
+
+                // 0
+                // key  = 0
+                //  values = sports[]
+
+
+                int key =BlocProvider.of<CategoriesCubit>(context).categoryIndex;
+                List<NewModel>?  news = BlocProvider.of<TopHeadlineCubit>(context).mapForNews[key] ;
+
+
+                 ///  { 0: [NewModel] }
+
+                return Expanded(child:
+
+                state is GetTopHeadlineLoadingState &&  news== null
+                    ||    state is GetTopHeadlineLoadingState && news!.isEmpty
+
+
+                    ?
 
                         const Center(
                           child: CircularProgressIndicator(),
@@ -66,16 +92,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(state.errorMessage),
                       TextButton(onPressed: ( ){
                         BlocProvider.of<TopHeadlineCubit>(context).getTopHeadline(
-                            category: "technology"
+                            bookmarksList: BlocProvider.of<BookMarkCubit>(context).bookMarks,
+
+
+                            category: "sports",
+                          index: 0
 
                         );
 
                       } , child: Text("Try Again"))
                     ],
                   ),
-                ): ListViewForNews(news: BlocProvider
-                    .of<TopHeadlineCubit>(context)
-                    .topHeadlines,));
+                ): ListViewForNews(news:news!));
               },
             )
           ],
