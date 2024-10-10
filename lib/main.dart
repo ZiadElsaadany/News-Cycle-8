@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:news_api_cycle_8/core/app_fonts.dart';
+import 'package:news_api_cycle_8/core/hive.dart';
 import 'package:news_api_cycle_8/features/home/data/models/new_model.dart';
+import 'package:news_api_cycle_8/features/home/data/models/source_model.dart';
 import 'package:news_api_cycle_8/features/home/data/repos/home_repo_implemetation.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/book_mark_cubit/book_mark_cubit.dart';
 import 'package:news_api_cycle_8/features/home/presentation/controller/get_top_headline/get_top_headline_cubit.dart';
@@ -14,15 +17,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
 
-
+  await Hive.initFlutter();
+  Hive.registerAdapter(NewModelAdapter());
+  Hive.registerAdapter(SourceModelAdapter());
+await  Hive.openBox<NewModel>(AppHive.bookMarkBox);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
 
-
-  SourceModel sourceModel1 = SourceModel(id: "0", name: "ziad");
-  SourceModel sourceModel2 = SourceModel(id: "0", name: "ziad");
 
 
   runApp(MultiBlocProvider(

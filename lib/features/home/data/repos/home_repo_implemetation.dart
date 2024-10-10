@@ -10,6 +10,8 @@ import 'package:news_api_cycle_8/features/home/data/models/new_model.dart';
 import 'package:news_api_cycle_8/features/home/data/repos/home_Repo.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/source_model.dart';
+
 class HomeRepoImplementationFromApi implements HomeRepo {
   @override
   Future<Either<Failure, List<NewModel>>> getTopHeadline(
